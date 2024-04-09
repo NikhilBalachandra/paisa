@@ -31,6 +31,8 @@ jobs:
         cp ./result/bin/ledger internal/binary/ledger
         go build
         cp paisa paisa-cli-linux-amd64
+        GOARCH=arm64 go build
+        cp paisa paisa-cli-linux-arm64
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
