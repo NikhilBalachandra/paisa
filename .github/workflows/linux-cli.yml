@@ -25,13 +25,14 @@ jobs:
     - uses: vegardit/fast-apt-mirror.sh@v1
     - run: |
         sudo apt-get install -y sqlite3
+        sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
         npm install
         npm run build
         nix-build ledger.nix
         cp ./result/bin/ledger internal/binary/ledger
         go build
         cp paisa paisa-cli-linux-amd64
-        GOARCH=arm64 go build
+        CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ CGO_ENABLED=1 GOARCH=arm64
         cp paisa paisa-cli-linux-arm64
     - name: Release
       uses: softprops/action-gh-release@v1
